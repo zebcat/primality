@@ -2,11 +2,12 @@
 <pre id="output"></pre>
 
 <script>
-    PrintThis="";
+    var PrintThis="";
     const inputElement = document.getElementById("userInput");
     inputElement.addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
             const submittedText = inputElement.value;
+            var PrintThis="";
             if(BPSW(BigInt(submittedText))){
                 Print("Almost definitely prime!");
                 Print("e");
@@ -14,7 +15,7 @@
                 Print("Composite.")
                 Print("erfee");
             }
-            inputElement.value = "";
+            inputElement.value="";
         }
     });
 
@@ -106,8 +107,8 @@ function BPSW(n){
   }else{
     var search=InclusionRange;
   }
-  if((n&1n)==0)return false;
-  for(var i=1;SmallPrimes[i]<=search;i++)if(n%SmallPrimes[i]==0)return false;
+  if((n&1n)==0n)return false;
+  for(var i=1;SmallPrimes[i]<=search;i++)if(n%SmallPrimes[i]==0n)return false;
   Print("Passed trial division up to "+search);
   if(succeed=="Trial division")return true;
   // Montgomery pre-infrastructure
@@ -180,7 +181,7 @@ function BPSW(n){
   // Lucas test
   for(var D=5n;j(D,n)!=-1n;D=D<0n?-D+2n:-D-2n){
     // first D in [5,-7,9,-11,13,-15,17...] such that j(D/n) is -1
-    if(D==17){
+    if(D==17n){
       // average D's tried is ~3.14776
       // verify as not square if 6 D's have been searched
       if([1n,9n,17n,25n,33n,41n,49n,57n].includes(n&63n)){
