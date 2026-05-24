@@ -1,12 +1,12 @@
 <input type="text" id="userInput" placeholder="Insert a number.">
-<p id="output"></p>
+<pre id="output"></pre>
 
 <script>
+    PrintThis="";
     const inputElement = document.getElementById("userInput");
     inputElement.addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
             const submittedText = inputElement.value;
-            PrintThis="";
             if(BPSW(BigInt(submittedText))){
                 Print("Almost definitely prime!");
                 Print("e");
