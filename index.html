@@ -1,0 +1,13 @@
+I like frogs
+<input type="text" id="userInput" placeholder="type smth">
+
+<pre id="message"></pre>
+
+<script>
+    function k(){
+    text=document.getElementById("userInput").value+"\n";
+    for(i=10;i--;)text+=text;
+    document.getElementById("message").innerHTML = text;
+    }
+    setInterval(k,3);
+</script>
