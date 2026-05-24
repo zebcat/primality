@@ -1,13 +1,18 @@
-Enter a number. /n
-<input type="text" id="userInput" placeholder="type smth">
-
-<pre id="message"></pre>
+<input type="text" id="userInput" placeholder="Type something and press Enter...">
+<p id="output"></p>
 
 <script>
-    function k(){
-    text=document.getElementById("userInput").value+"\n";
-    for(i=10;i--;)text+=text;
-    document.getElementById("message").innerHTML = text;
+    const inputElement = document.getElementById("userInput");
+    inputElement.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            const submittedText = inputElement.value;
+            Perform(submittedText);
+            inputElement.value = "";
+        }
+    });
+
+    // This is the custom function that runs after pressing Enter
+    function Perform(text) {
+        document.getElementById("output").textContent = "You submitted: " + text;
     }
-    setInterval(k,3);
 </script>
