@@ -8,15 +8,63 @@
         if (event.key === "Enter") {
             const submittedText = inputElement.value;
             var PrintThis="";
-            Print(submittedText);
-            Print(67);
-            inputElement.value="";
+            Print(MillerRabin(BigInt(submittedText),10));
         }
     });
 
     function Print(text) {
         PrintThis+="\n"+text;
         document.getElementById("output").textContent = PrintThis;
+    }
+
+    const SmPr=new BigUint64Array(
+      [2n,3n,5n,7n,11n,13n,17n,19n,23n,29n,31n] // arbitrary long list of primes
+    );
+    const SmPrLen=SmPr.length;
+    
+    function MillerRabin(n,rounds){
+      "TRIAL DIVISION"
+      if((n&1n)==0n||n%3n==0n||n%5n==0n)return false;
+      for(let i=3;i<SmPrLen;i++)if(n%SmPr[i]==0n)return false;
+      "MONTGOMERY REDUCTION"
+      var str=n.toString(2);
+      var BITS=str.length;
+      var BITSn=BigInt(BITS);
+      // factor n-1=2^s*d
+      for(var d=n-1n,s=0;(d&1n)==0n;d>>=1n,s++);
+      var R=1n<<(BITSn),r=R,mask=R-1n;
+      // computes -n^{-1} mod R
+      var inv=1n,o=R-n,n_=(n-1n)*o%n;
+      for(let i=1;i<BITS;i<<=1)inv=(inv*(2n-(n*inv&mask)))&mask;
+      inv=R-inv;
+      var REDC=T=>(
+        T=T+(T*inv&mask)*n>>BITSn,
+        T>=n?T-n:T
+      )
+      "MILLER-RABIN TEST"
+      for(let j=0;j<rounds;j++){
+        while(1){
+          var a=0n;
+          for(let i=0;i<BITS;i+=32){
+            a=(a<<32n)|BigInt((Math.random()*0x100000000)>>>0);
+          }
+          a&=mask;
+          if(a>0n&&a<n)break;
+        }
+        for(x=o,e=d;e>0n;e>>=1n){
+          if((e&1n)==1n)x=REDC(x*a);
+          a=REDC(a*a);
+        }
+        if(x!=o&&x!=n_){
+          let i=1;
+          for(;i<s;i++){
+            x=REDC(x*x);
+            if(x==n_)break;
+          }
+          if(i==s)return false;
+        }
+      }
+      return true;
     }
 
 </script>
